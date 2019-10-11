@@ -117,3 +117,14 @@ through the query interface.
 * Timer ID    
   The ID of the part that is is a part of. This field must have a value.
 
+
+## Other information
+Selection comboboxes work such that items above them in the hirarchy are selected as well as the item.
+
+Selection combo boxes work such that, if a part is selected, only actions
+that pertain to that part appear in the selection box. If there is no
+current part, but there is a current assembly, then actions that qualify
+include all of the parts in that assembly. When an action is selected,
+the part is selected as well. If there is no selection in the hirarchy, then
+all of the actions are presented.
+
