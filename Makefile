@@ -2,8 +2,20 @@
 TARGET	=	shop-timer
 DEPS	=	main.py \
 			main_frame.py \
-			data_store.py \
-			utility.py
+			database.py \
+			utility.py \
+			action_table.py \
+			action_dialogs \
+			assembly_dialogs.py \
+			assembly_table.py \
+			dialogs.py \
+			part_dialogs.py \
+			part_table.py \
+			tables.py \
+			timer_dialogs.py \
+			timer_table.py \
+			timer_instance_table.py
+
 
 
 all: $(TARGET)
