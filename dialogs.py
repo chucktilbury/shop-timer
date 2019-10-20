@@ -4,7 +4,7 @@ import tkinter
 import math
 from utility import Logger, debugger
 import utility
-from data_store import DataStore
+#from data_store import DataStore
 
 help_text = """
 Shop Timer
@@ -49,7 +49,7 @@ class BaseDialog(tkinter.Toplevel):
 
         self.result = None
         # get a copy of the data_store for the children
-        self.data_store = DataStore.get_instance()
+        #self.data_store = DataStore.get_instance()
 
         body = tkinter.Frame(self)
         self.initial_focus = self.body(body)

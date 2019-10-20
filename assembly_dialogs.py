@@ -1,7 +1,7 @@
 from tkinter import messagebox as mbox
 import tkinter
 from utility import Logger
-from data_store import DataStore
+#from data_store import DataStore
 from dialogs import BaseDialog
 
 class NewAssemblyDialog(BaseDialog):

@@ -6,8 +6,9 @@ import sys
 import os
 import time
 
-from data_store import DataStore
+from database import Database
 from utility import Logger, debugger, raise_event
+from assembly_table import AssemblyTable
 import utility
 import actions_dialogs
 import parts_dialogs
@@ -25,23 +26,23 @@ class MainFrame(tkinter.Frame):
         self.logger = Logger(self, Logger.DEBUG)
         self.logger.debug(sys._getframe().f_code.co_name)
 
+        self.data = Database.get_instance()
+
         tkinter.Frame.__init__(self, master)
         self.master = master
         self.master.protocol("WM_DELETE_WINDOW", self.close_window)
 
+        self.timer_running_flag = False
+
         tkinter.Label(self.master, text="Shop Timer", font=(
             "Helvetica", 14)).grid(row=0, column=0)
+
+        self.assembly = AssemblyTable()
 
         self.upper_frame = tkinter.LabelFrame(self.master, text="Parameters", padx=55)
         self.upper_frame.grid(row=1, column=0)
         self.lower_frame = tkinter.LabelFrame(self.master, text="Timer", padx=35)
         self.lower_frame.grid(row=2, column=0)
-
-        # set up some default values
-        #self.current_file_name = os.path.join(os.getcwd(), "untitled.wis")
-
-        self.data = DataStore.get_instance()
-        self.logger.debug("data store: %s" % (str(self.data)))
 
         menu = tkinter.Menu(self.master, tearoff=0)
         self.master.config(menu=menu)
@@ -143,18 +144,19 @@ class MainFrame(tkinter.Frame):
 
     @debugger
     def close_window(self):
-        if self.data.get_change_flag():
-            if messagebox.askyesno("Quit", "Do you want to save the changes before quitting?"):
-                self.logger.debug('save')
-                self.saveCommand()
-            else:
-                self.logger.debug('ignore')
+        if self.timer_running_flag:
+            messagebox.showinfo("Quit", "A timer is running.\nStopping the timer.")
+            self.logger.debug('save')
+            self.saveCommand()
+
+        self.data.close()
         self.master.destroy()
 
     # Assembly commands
     @debugger
     def newAssembly(self):
         assembly_dialogs.NewAssemblyDialog(self.master)
+        self.assembly.create('chuckie', 'description', 'Notes.')
 
     @debugger
     def editAssembly(self):
@@ -163,6 +165,17 @@ class MainFrame(tkinter.Frame):
     @debugger
     def selectAssembly(self):
         assembly_dialogs.SelectAssemblyDialog(self.master)
+        id = self.assembly.get_ids_by_name('chuckie')[0][0]
+        self.logger.debug(self.assembly.get_all())
+        self.assembly.update_by_id(id, description='hoopa loopa')
+        self.logger.debug(self.assembly.get_all())
+        # print(self.assembly.get_list())
+        # self.assembly.update_by_id(1, name='a differet name')
+        # print(self.assembly.get_list())
+        # self.assembly.update_by_name('a differet name', description="bla bla BLART!")
+        # print(self.assembly.get_list())
+        # print(self.assembly.get_id_list())
+        # print(self.assembly.get_name_list())
 
     @debugger
     def delAssembly(self):
@@ -246,7 +259,7 @@ class MainFrame(tkinter.Frame):
     @debugger
     def aboutCommand(self):
         messagebox.showinfo(
-            "About", "Tilbury Woodwinds Company\nWhistle Calculator\nChuck Tilbury (c) 2019\nVersion: 1.0\nData Version: %s" % (self.data.get_version()))
+            "About", "Tilbury Woodwinds Company\nShop Timer\nChuck Tilbury (c) 2019\nVersion: 1.0\nData Version: %s" % (self.data.get_version()))
 
     @debugger
     def dumpInternalData(self):

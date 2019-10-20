@@ -1,2 +1,6 @@
 
 Information about features and bugs, etc.
+
+1. Need to verify that a new name or number is unique within a table.
+2. Add code to verify types before committing to database.
+3. Consistently use ID to access rows. Names are for display only.
