@@ -10,8 +10,8 @@ from database import Database
 from utility import Logger, debugger, raise_event
 from assembly_table import AssemblyTable
 import utility
-import actions_dialogs
-import parts_dialogs
+import action_dialogs
+import part_dialogs
 import timer_dialogs
 import assembly_dialogs
 import dialogs
@@ -156,7 +156,7 @@ class MainFrame(tkinter.Frame):
     @debugger
     def newAssembly(self):
         assembly_dialogs.NewAssemblyDialog(self.master)
-        self.assembly.create('chuckie', 'description', 'Notes.')
+        self.assembly.create('chuckie', '101010', 'description', 'Notes.')
 
     @debugger
     def editAssembly(self):
@@ -184,36 +184,36 @@ class MainFrame(tkinter.Frame):
     # Part commands
     @debugger
     def newPart(self):
-        parts_dialogs.NewPartDialog(self.master)
+        part_dialogs.NewPartDialog(self.master)
 
     @debugger
     def editPart(self):
-        parts_dialogs.EditPartDialog(self.master)
+        part_dialogs.EditPartDialog(self.master)
 
     @debugger
     def selectPart(self):
-        parts_dialogs.SelectPartDialog(self.master)
+        part_dialogs.SelectPartDialog(self.master)
 
     @debugger
     def delPart(self):
-        parts_dialogs.DelPartDialog(self.master)
+        part_dialogs.DelPartDialog(self.master)
 
     # Action commands
     @debugger
     def newAction(self):
-        actions_dialogs.NewActionDialog(self.master)
+        action_dialogs.NewActionDialog(self.master)
 
     @debugger
     def editAction(self):
-        actions_dialogs.EditActionDialog(self.master)
+        action_dialogs.EditActionDialog(self.master)
 
     @debugger
     def selectAction(self):
-        actions_dialogs.SelectActionDialog(self.master)
+        action_dialogs.SelectActionDialog(self.master)
 
     @debugger
     def delAction(self):
-        actions_dialogs.DelActionDialog(self.master)
+        action_dialogs.DelActionDialog(self.master)
 
     # Timer commands
     @debugger

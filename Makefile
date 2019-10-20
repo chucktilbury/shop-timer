@@ -5,7 +5,7 @@ DEPS	=	main.py \
 			database.py \
 			utility.py \
 			action_table.py \
-			action_dialogs \
+			action_dialogs.py \
 			assembly_dialogs.py \
 			assembly_table.py \
 			dialogs.py \
