@@ -1,12 +1,13 @@
-project(main)
-
-include(${PROJECT_SOURCE_DIR}/../../CMakeBuildOpts.txt)
+project($ENV{_PROJECT_NAME})
 
 add_executable(${PROJECT_NAME}
-    ${${PROJECT_NAME}_files}
+    main.c
 )
 
 target_link_libraries(${PROJECT_NAME}
     #gc
     #cord
+    common
+    ${GTK4_LIBRARIES}
+    ${SQLITE3_LIBRARIES}
 )

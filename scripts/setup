@@ -4,9 +4,12 @@
 # things like the compiler and its libraries.
 
 # Set up the project name
-# if [ -z "$_PROJECT_" ]; then
-#     export _PROJECT_=pgen
-# fi
+read -r -a name <./scripts/PROJECT_NAME || (( ${#name[@]}  ))
+#echo "NAME: ${name[0]} `pwd`"
+
+if [ -z "$_PROJECT_" ]; then
+    export _PROJECT_=${name[0]}
+fi
 
 if [ -z "$1" ]; then
     echo "Build types are debug, release, or profile. Set default to debug."
