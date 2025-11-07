@@ -1,0 +1,79 @@
+#!/usr/bin/env bash
+
+# Source the basic configuration for this shell
+source $HOME/.bashrc
+export HISTCONTROL=ignoreboth:erasedups
+
+# make some GIT shortcuts
+function status {
+    git status
+}
+
+function add {
+    old_dir=$PWD
+    if [ -z ${_PROJECT_LOC} ]; then
+        echo "error: Project directory is not found."
+    else
+        cd $_PROJECT_LOC
+        git add .
+    fi
+    cd $old_dir
+}
+
+function commit {
+    git commit
+}
+
+function push {
+    git push
+}
+
+function all {
+    old_dir=$PWD
+    if [ -z ${_PROJECT_LOC} ]; then
+        echo "error: Project directory is not found."
+    else
+        cd $_PROJECT_LOC
+        git add . && git commit && git push
+    fi
+    cd $old_dir
+}
+
+function dbg {
+    if [ $# -eq 0 ]; then
+        echo "error: executable name is required"
+    elif [ $# -eq 1 ]; then
+        echo "$1"
+        kdbg $1
+    elif [ $# -gt 1 ]; then
+        args=("$@")
+        name=${args[0]}
+        unset args[0]
+        kdbg -a "${args[*]}" $name 2> /dev/null &
+    fi
+}
+
+export PATH=$_PROJECT_LOC:$_PROJECT_LOC/bin:$_PROJECT_LOC/scripts:$PATH
+export _RUNTIME=$_PROJECT_LOC/src/runtime
+
+PS1='\[\e[0;31;1m\]$_PROJECT_NAME($_BUILD_TYPE):\[\e[0m\]'$PS1
+cd $_PROJECT_LOC
+
+if [[ -d build ]]; then
+    cd build
+else
+    mkdir build
+    cd build
+fi
+
+echo $1
+
+# cmake -DCMAKE_C_COMPILER=gcc \
+#     -DCMAKE_CXX_COMPILER=gcc \
+#     -DCMAKE_BUILD_TYPE=$_BUILD_TYPE \
+#     -DCMAKE_EXPORT_COMPILE_COMMANDS=1 ..
+
+cmake -DCMAKE_C_COMPILER=clang \
+    -DCMAKE_CXX_COMPILER=clang++ \
+    -DCMAKE_BUILD_TYPE=$_BUILD_TYPE \
+    -DCMAKE_EXPORT_COMPILE_COMMANDS=1 ..
