@@ -5,15 +5,15 @@
 #include <stddef.h>
 
 typedef struct _array_t_ {
-    unsigned char* buffer; // array of bytes
-    int capacity;          // capacity of array in items
-    int length;            // length of the array in items
-    int size;              // size of each item
-    int (*comp)(void*,void*); // compare function.
-    int is_sorted; // flag indicates if a sorted search is okay.
+    unsigned char* buffer;     // array of bytes
+    int capacity;              // capacity of array in items
+    int length;                // length of the array in items
+    int size;                  // size of each item
+    int (*comp)(void*, void*); // compare function.
+    int is_sorted;             // flag indicates if a sorted search is okay.
 } array_t;
 
-array_t* create_array(size_t size, int(*comp)(void*,void*));
+array_t* create_array(size_t size, int (*comp)(void*, void*));
 void destroy_array(array_t* arr);
 void insert_array(array_t* arr, array_t* ptr, int index);
 void append_array(array_t* dest, array_t* src);

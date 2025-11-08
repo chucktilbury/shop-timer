@@ -64,7 +64,7 @@ void push_ptr_list(pointer_list_t* lst, void* ptr) {
 
 void* pop_ptr_list(pointer_list_t* lst) {
 
-    void *ptr = NULL;
+    void* ptr = NULL;
 
     if(lst->len > 0) {
         ptr = lst->buffer[lst->len - 1];
@@ -76,7 +76,7 @@ void* pop_ptr_list(pointer_list_t* lst) {
 
 void* peek_ptr_list(pointer_list_t* lst) {
 
-    void *ptr = NULL;
+    void* ptr = NULL;
 
     if(lst->len > 0)
         ptr = lst->buffer[lst->len - 1];

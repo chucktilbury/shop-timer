@@ -305,7 +305,7 @@ void* pop_array(array_t* arr) {
 
     void* ptr = NULL;
     if(arr->length > 0) {
-        ptr = &arr->buffer[arr->length-1];
+        ptr = &arr->buffer[arr->length - 1];
         arr->length--;
     }
 
@@ -319,7 +319,7 @@ void* peek_array(array_t* arr) {
 
     void* ptr = NULL;
     if(arr->length > 0) {
-        ptr = &arr->buffer[arr->length-1];
+        ptr = &arr->buffer[arr->length - 1];
     }
 
     return ptr;
